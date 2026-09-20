@@ -77,19 +77,20 @@ erDiagram
 ### Core Business Rule
 A customer is classified based on their recency of engagement relative to an analytical cutoff date (**`2025-12-20`**):
 
-$$\text{Inactivity Days} = \text{Reference Date (2025-12-20)} - \max(\text{activity\_date})$$
+> **Formula:**  
+> `Inactivity Days` = `Reference Date (2025-12-20)` − `MAX(activity_date)`
 
-- **Churned:** If a customer has **no recorded activity** (`NULL`) OR if their last activity occurred **more than 30 days prior** ($\text{Inactivity Days} > 30$).
-- **Active:** If a customer engaged within the trailing 30-day window ($\text{Inactivity Days} \le 30$).
+- **Churned:** If a customer has **no recorded activity** (`NULL`) OR if their last activity occurred **more than 30 days prior** (`Inactivity Days > 30`).
+- **Active:** If a customer engaged within the trailing 30-day window (`Inactivity Days <= 30`).
 
 ### Boundary Cases Evaluated
 | Scenario | Example Customer | Last Activity Date | Days Inactive | Classification | Explanation |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Recent Activity** | Customer 13 (Deepak) | `2025-12-19` | 1 day | **Active** | Highly engaged customer ($1 \le 30$). |
-| **Within 30 Days** | Customer 16 (Sneha) | `2025-11-30` | 20 days | **Active** | Recent activity within the active threshold ($20 \le 30$). |
-| **Exactly 30 Days** | Theoretical Boundary | `2025-11-20` | 30 days | **Active** | Retention threshold boundary ($\le 30$ days is Active). |
-| **Past 30 Days** | Customer 23 (Suresh) | `2025-11-01` | 49 days | **Churned** | Inactivity threshold exceeded ($49 > 30$). |
-| **Long-Term Inactivity**| Customer 21 (Rohit) | `2025-07-20` | 153 days | **Churned** | Extended lapse in engagement ($153 > 30$). |
+| **Recent Activity** | Customer 13 (Deepak) | `2025-12-19` | 1 day | **Active** | Highly engaged customer (1 day <= 30). |
+| **Within 30 Days** | Customer 16 (Sneha) | `2025-11-30` | 20 days | **Active** | Recent activity within the active threshold (20 days <= 30). |
+| **Exactly 30 Days** | Theoretical Boundary | `2025-11-20` | 30 days | **Active** | Retention threshold boundary (<= 30 days is Active). |
+| **Past 30 Days** | Customer 23 (Suresh) | `2025-11-01` | 49 days | **Churned** | Inactivity threshold exceeded (49 days > 30). |
+| **Long-Term Inactivity**| Customer 21 (Rohit) | `2025-07-20` | 153 days | **Churned** | Extended lapse in engagement (153 days > 30). |
 | **Zero Activity** | Customer 29 & 30 | `NULL` | N/A | **Churned** | Signed up but never active; captured via `LEFT JOIN`. |
 
 ---
