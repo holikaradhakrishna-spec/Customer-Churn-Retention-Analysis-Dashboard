@@ -5,7 +5,6 @@
 [![Status](https://img.shields.io/badge/Project%20Status-Verified%20%26%20Tested-success.svg)]()
 
 **Author:** R Holika  
-**Registration Number:** 22MID0307  
 **Domain:** Business Intelligence, Customer Analytics & Retention Strategy  
 
 ---
@@ -339,5 +338,4 @@ customer-churn-retention-analysis-dashboard/
 ## 👤 Author
 
 * **R Holika**  
-* **Registration Number:** 22MID0307  
 * **Institution:** Vellore Institute of Technology (VIT)
